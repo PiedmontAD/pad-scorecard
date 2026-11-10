@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Piedmont Athletic Development - Player Scorecard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Teko:wght@500;700&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #0a0f1d;
+      --card-bg: #111827;
+      --card-border: #1f293d;
+      --accent-green: #00e676;
+      --accent-purple: #9d4edd;
+      --text-main: #f3f4f6;
+      --text-muted: #9ca3af;
+      --nav-blue: #0b192c;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .toolbar {
+      width: 100%;
+      max-width: 1100px;
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--card-bg);
+      padding: 15px 25px;
+      border-radius: 12px;
+      border: 1px solid var(--card-border);
+    }
+
+    .toolbar h1 {
+      font-family: 'Teko', sans-serif;
+      font-size: 28px;
+      letter-spacing: 1px;
+      color: #fff;
+    }
+
+    .btn {
+      background: linear-gradient(135deg, var(--accent-green), #00b359);
+      color: #000;
+      font-weight: 700;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      transition: all 0.2s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(0, 230, 118, 0.4);
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1100px;
+      background-color: #0b1326;
+      border-radius: 16px;
+      border: 2px solid var(--card-border);
+      padding: 30px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+    }
+
+    /* Header Styling */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px solid var(--card-border);
+      padding-bottom: 20px;
+      margin-bottom: 25px;
+    }
+
+    .brand-section {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .logo-badge {
+      width: 80px;
+      height: 90px;
+      background: linear-gradient(145deg, #1e293b, #0f172a);
+      border: 2px solid var(--accent-green);
+      clip-path: polygon(50% 0%, 100% 20%, 100% 80%, 50% 100%, 0% 80%, 0% 20%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .logo-badge span {
+      font-family: 'Teko', sans-serif;
+      font-size: 22px;
+      font-weight: 700;
+      line-height: 1;
+      color: #fff;
+    }
+
+    .logo-badge .sub {
+      font-size: 8px;
+      color: var(--accent-green);
+      letter-spacing: 1px;
+    }
+
+    .title-area h2 {
+      font-family: 'Teko', sans-serif;
+      font-size: 42px;
+      letter-spacing: 2px;
+      line-height: 1;
+      color: #fff;
+    }
+
+    .title-area p {
+      font-size: 12px;
+      color: var(--accent-green);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+
+    .overall-badge {
+      text-align: center;
+      background: rgba(17, 24, 39, 0.8);
+      padding: 10px 25px;
+      border-radius: 12px;
+      border: 1px solid var(--accent-purple);
+    }
+
+    .overall-badge .number {
+      font-family: 'Teko', sans-serif;
+      font-size: 48px;
+      font-weight: 700;
+      color: var(--accent-green);
+      line-height: 1;
+    }
+
+    .overall-badge .label {
+      font-size: 11px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* Player Profile Box */
+    .player-info-grid {
+      display: grid;
+      grid-template-columns: 140px 1fr 1fr 1fr;
+      gap: 20px;
+      background: var(--card-bg);
+      padding: 20px;
+      border-radius: 12px;
+      border: 1px solid var(--card-border);
+      margin-bottom: 30px;
+    }
+
+    .photo-upload {
+      width: 100%;
+      height: 140px;
+      border: 2px dashed var(--card-border);
+      border-radius: 8px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      background: #090e1a;
+    }
+
+    .photo-upload img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .photo-upload span {
+      font-size: 11px;
+      color: var(--text-muted);
+      text-align: center;
+      padding: 5px;
+    }
+
+    .info-group {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .field-box {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .field-box label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+
+    .field-box input {
+      background: #090e1a;
+      border: 1px solid var(--card-border);
+      color: #fff;
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 600;
+      outline: none;
+    }
+
+    .field-box input:focus {
+      border-color: var(--accent-green);
+    }
+
+    /* Stats Grid */
+    .stats-container {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 25px;
+    }
+
+    .stat-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 20px;
+    }
+
+    .category-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--card-border);
+      padding-bottom: 10px;
+      margin-bottom: 15px;
+    }
+
+    .category-header h3 {
+      font-family: 'Teko', sans-serif;
+      font-size: 24px;
+      letter-spacing: 1px;
+      color: #fff;
+      text-transform: uppercase;
+    }
+
+    .category-score {
+      font-family: 'Teko', sans-serif;
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--accent-green);
+    }
+
+    .stat-row {
+      margin-bottom: 14px;
+    }
+
+    .stat-label-val {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .stat-name {
+      color: var(--text-main);
+      outline: none;
+    }
+
+    .stat-val {
+      color: var(--accent-green);
+    }
+
+    .slider-container {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    input[type="range"] {
+      -webkit-appearance: none;
+      width: 100%;
+      height: 8px;
+      border-radius: 4px;
+      background: #1f293d;
+      outline: none;
+    }
+
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: var(--accent-green);
+      cursor: pointer;
+      box-shadow: 0 0 10px rgba(0, 230, 118, 0.5);
+    }
+
+    /* Footer / Roles Section */
+    .roles-card {
+      grid-column: span 2;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 20px;
+      margin-top: 10px;
+    }
+
+    .roles-flex {
+      display: flex;
+      gap: 20px;
+    }
+
+    .roles-flex .field-box {
+      flex: 1;
+    }
+
+    @media print {
+      body {
+        background: #0b1326 !important;
+        padding: 0;
+        -webkit-print-color-adjust: exact;
+      }
+      .toolbar {
+        display: none;
+      }
+      .container {
+        box-shadow: none;
+        border: none;
+        max-width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="toolbar">
+    <h1>PIEDMONT ATHLETIC DEVELOPMENT — STATS GENERATOR</h1>
+    <button class="btn" onclick="window.print()">Download / Print PDF</button>
+  </div>
+
+  <div class="container">
+    <!-- Header -->
+    <div class="header">
+      <div class="brand-section">
+        <div class="logo-badge">
+          <span>PAD</span>
+          <span class="sub">ATHLETIC</span>
+        </div>
+        <div class="title-area">
+          <h2>PLAYER SCORECARD</h2>
+          <p>Identify / Measure / Progress / Achieve</p>
+        </div>
+      </div>
+      <div class="overall-badge">
+        <div class="number" id="overall-rating">80</div>
+        <div class="label">Overall Rating</div>
+      </div>
+    </div>
+
+    <!-- Player Information -->
+    <div class="player-info-grid">
+      <div class="photo-upload" onclick="document.getElementById('photo-input').click()">
+        <img id="player-img" src="" style="display:none;">
+        <span id="photo-placeholder">+ Upload Photo</span>
+        <input type="file" id="photo-input" accept="image/*" style="display:none" onchange="loadPhoto(event)">
+      </div>
+      
+      <div class="info-group">
+        <div class="field-box">
+          <label>Player Name</label>
+          <input type="text" value="MICHAEL OLISE">
+        </div>
+        <div class="field-box">
+          <label>Team / Club</label>
+          <input type="text" value="Bayern München">
+        </div>
+      </div>
+
+      <div class="info-group">
+        <div class="field-box">
+          <label>Primary Position</label>
+          <input type="text" value="RM / RW / CAM">
+        </div>
+        <div class="field-box">
+          <label>Age / Preferred Foot</label>
+          <input type="text" value="24 | Left">
+        </div>
+      </div>
+
+      <div class="info-group">
+        <div class="field-box">
+          <label>Skill Moves / Weak Foot</label>
+          <input type="text" value="5★ / 3★">
+        </div>
+        <div class="field-box">
+          <label>Assessment Date</label>
+          <input type="text" value="2026-11-10">
+        </div>
+      </div>
+    </div>
+
+    <!-- Statistics Categories -->
+    <div class="stats-container">
+      
+      <!-- ATTACK -->
+      <div class="stat-card" data-cat="attack">
+        <div class="category-header">
+          <h3>Attack</h3>
+          <div class="category-score" id="score-attack">75</div>
+        </div>
+        <div class="stat-row"><div class="stat-label-val"><span contenteditable="true" class="stat-name">Crossing</span><span class="stat-val">86</span></div><div class="slider-container"><input type="range" min="1" max="99" value="86" oninput="updateScore(this)"></div></div>
+        <div class="stat-row"><div class="stat-label-val"><span contenteditable="true" class="stat-name">Finishing</span><span class="stat-val">85</span></div><div class="slider-container"><input type="range" min="1" max="99" value="85" oninput="updateScore(this)"></div></div>
+        <div class="stat-row"><div class="stat-label-val"><span contenteditable="true" class="stat-name">Heading Acc.</span><span class="stat-val">43</span></div><div class="slider-container"><input type="range" min="1" max="99" value="43" oninput="updateScore(this)"></div></div>
+        <div class="stat-row"><div class="stat-label-val"><span contenteditable="true" class="stat-name">Short Pass</span><span class="stat-val">90</span></div><div class="slider-container"><input type="range" min="1" max="99" value="90" oninput="updateScore(this)"></div></div>
+        <div class="stat-row"><div class="stat-label-val"><span contenteditable="true" class="stat-name">Volleys</span><span class="stat-val">71</span></div><div class="slider-container"><input type="range" min="1" max="99" value="71" oninput="updateScore(this)"></div></div>
+      </div>
+
+      <!-- SKILL -->
+      <div class="stat-card" data-cat="skill">
+        <div class="category-header">
+          <h3>Skill</h3>
+          <div class="category-score" id="score-skill">87</div>
+        </div>
+        <div class="stat-row"><div class="stat-label-val"><span contenteditable="true" class="stat-name">Dribbling</span><span class="stat-val">92</span></div><div class="slider-container"><input type="range" min="1" max="99" value="92" oninput="updateScore(this)"></div></div>
+        <div class="stat-row"><div class="stat-label-val"><span contenteditable="true" class="stat-name">Curve</span><span class="stat-val">87</span></div><div class="slider-container"><input type="range" min="1" max="99" value="87" oninput="updateScore(this)"></div></div>
+        <div class="stat-row"><div class="stat-label-val"><span contenteditable="true" class="stat-name">FK Acc.</span><span class="stat-val">81</span></div><div class="slider-container"><input type="range" min="1" max="99" value="81" oninput="updateScore(this)"></div></div>
+        <div class="stat-row"><div class="stat-label-val"><span contenteditable="true" class="stat-name">Long Pass</span><span class="stat-val">84</span></div><div class="slider-container"><input type="range" min="1" max="99" value="84" oninput="updateScore(this)"></div></div>
+        <div class="stat-row"><div class="stat-label-val"><span contenteditable="true" class="stat-name">Ball Control</span><span class="stat-val">91</span></div><div class="slider-container"><input type="range" min="1" max="99" value="91" oninput="updateScore(this)"></div></div>
+      </div>
+
+      <!-- POWER -->
+      <div class="stat-card" data-cat="power">
+        <div class="category-header">
+          <h3>Power</h3>
+          <div class="category-score" id="score-power">74</div>
+        </div>
+        <div class="stat-row"><div class="stat-label-val"><span contenteditable="true" class="stat-name">Shot Power</span><span class="stat-val">78</span></div><div class="slider-container"><input type="range" min="1" max="99" value="78" oninput="updateScore(this)"></div></div>
+        <div class="stat-row"><div class="stat-label-val"><span contenteditable="true" class="stat-name">Jumping</span><span class="stat-val">61</span></div><div class="slider-container"><input type="range" min="1" max="99" value="61" oninput="updateScore(this)"></div></div>
+        <div class="stat-row"><div class="stat-label-val"><span contenteditable="true" class="stat-name">Stamina</span><span class="stat-val">86</span></div><div class="slider-container"><input type="range" min="1" max="99" value="86" oninput="updateScore(this)"></div></div>
+        <div class="stat-row"><div class="stat-label-val"><span contenteditable="true" class="stat-name">Strength</span><span class="stat-val">62</span></div><div class="slider-container"><input type="range" min="1" max="99" value="62" oninput="updateScore(this)"></div></div>
+        <div class="stat-row"><div class="stat-label-val"><span contenteditable="true" class="stat-name">Long Shots</span><span class="stat-val">83</span></div><div class="slider-container"><input type="range" min="1" max="99" value="83" oninput="updateScore(this)"></div></div>
+      </div>
+
+      <!-- MOVEMENT -->
+      <div class="stat-card" data-cat="movement">
+        <div class="category-header">
+          <h3>Movement</h3>
+          <div class="category-score" id="score-movement">87</div>
+        </div>
+        <div class="stat-row"><div class="stat-label-val"><span contenteditable="true" class="stat-name">Acceleration</span><span class="stat-val">85</span></div><div class="slider-container"><input type="range" min="1" max="99" value="85" oninput="updateScore(this)"></div></div>
+        <div class="stat-row"><div class="stat-label-val"><span contenteditable="true" class="stat-name">Sprint Speed</span><span class="stat-val">81</span></div><div class="slider-container"><input type="range" min="1" max="99" value="81" oninput="updateScore(this)"></div></div>
+        <div class="stat-row"><div class="stat-label-val"><span contenteditable="true" class="stat-name">Agility</span><span class="stat-val">91</span></div><div class="slider-container"><input type="range" min="1" max="99" value="91" oninput="updateScore(this)"></div></div>
+        <div class="stat-row"><div class="stat-label-val"><span contenteditable="true" class="stat-name">Reactions</span><span class="stat-val">91</span></div><div class="slider-container"><input type="range" min="1" max="99" value="91" oninput="updateScore(this)"></div></div>
+        <div class="stat-row"><div class="stat-label-val"><span contenteditable="true" class="stat-name">Balance</span><span class="stat-val">86</span></div><div class="slider-container"><input type="range" min="1" max="99" value="86" oninput="updateScore(this)"></div></div>
+      </div>
+
+      <!-- MENTAL -->
+      <div class="stat-card" data-cat="mental">
+        <div class="category-header">
+          <h3>Mental</h3>
+          <div class="category-score" id="score-mental">76</div>
+        </div>
+        <div class="stat-row"><div class="stat-label-val"><span contenteditable="true" class="stat-name">Aggression</span><span class="stat-val">66</span></div><div class="slider-container"><input type="range" min="1" max="99" value="66" oninput="updateScore(this)"></div></div>
+        <div class="stat-row"><div class="stat-label-val"><span contenteditable="true" class="stat-name">Interceptions</span><span class="stat-val">50</span></div><div class="slider-container"><input type="range" min="1" max="99" value="50" oninput="updateScore(this)"></div></div>
+        <div class="stat-row"><div class="stat-label-val"><span contenteditable="true" class="stat-name">Att. Position</span><span class="stat-val">86</span></div><div class="slider-container"><input type="range" min="1" max="99" value="86" oninput="updateScore(this)"></div></div>
+        <div class="stat-row"><div class="stat-label-val"><span contenteditable="true" class="stat-name">Vision</span><span class="stat-val">94</span></div><div class="slider-container"><input type="range" min="1" max="99" value="94" oninput="updateScore(this)"></div></div>
+        <div class="stat-row"><div class="stat-label-val"><span contenteditable="true" class="stat-name">Penalties</span><span class="stat-val">72</span></div><div class="slider-container"><input type="range" min="1" max="99" value="72" oninput="updateScore(this)"></div></div>
+      </div>
+
+      <!-- DEFENCE -->
+      <div class="stat-card" data-cat="defence">
+        <div class="category-header">
+          <h3>Defence</h3>
+          <div class="category-score" id="score-defence">44</div>
+        </div>
+        <div class="stat-row"><div class="stat-label-val"><span contenteditable="true" class="stat-name">Def. Awareness</span><span class="stat-val">44</span></div><div class="slider-container"><input type="range" min="1" max="99" value="44" oninput="updateScore(this)"></div></div>
+        <div class="stat-row"><div class="stat-label-val"><span contenteditable="true" class="stat-name">Stand Tackle</span><span class="stat-val">54</span></div><div class="slider-container"><input type="range" min="1" max="99" value="54" oninput="updateScore(this)"></div></div>
+        <div class="stat-row"><div class="stat-label-val"><span contenteditable="true" class="stat-name">Slide Tackle</span><span class="stat-val">33</span></div><div class="slider-container"><input type="range" min="1" max="99" value="33" oninput="updateScore(this)"></div></div>
+      </div>
+
+      <!-- POSITIONS & ROLES -->
+      <div class="roles-card">
+        <div class="category-header">
+          <h3>Positions & Tactical Roles</h3>
+        </div>
+        <div class="roles-flex">
+          <div class="field-box">
+            <label>Primary Role</label>
+            <input type="text" value="Wide Playmaker (RM/RW)">
+          </div>
+          <div class="field-box">
+            <label>Secondary Role</label>
+            <input type="text" value="Inside Forward / Attacking Mid">
+          </div>
+          <div class="field-box">
+            <label>Development Focus Area</label>
+            <input type="text" value="Weak Foot & Defensive Recovery">
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    function updateScore(slider) {
+      const row = slider.closest('.stat-row');
+      const valSpan = row.querySelector('.stat-val');
+      valSpan.textContent = slider.value;
+
+      const card = slider.closest('.stat-card');
+      const sliders = card.querySelectorAll('input[type="range"]');
+      let total = 0;
+      sliders.forEach(s => total += parseInt(s.value));
+      const avg = Math.round(total / sliders.length);
+      
+      const catName = card.getAttribute('data-cat');
+      document.getElementById('score-' + catName).textContent = avg;
+
+      recalculateOverall();
+    }
+
+    function recalculateOverall() {
+      const scores = document.querySelectorAll('.category-score');
+      let total = 0;
+      scores.forEach(s => total += parseInt(s.textContent));
+      const overall = Math.round(total / scores.length);
+      document.getElementById('overall-rating').textContent = overall;
+    }
+
+    function loadPhoto(event) {
+      const image = document.getElementById('player-img');
+      const placeholder = document.getElementById('photo-placeholder');
+      image.src = URL.createObjectURL(event.target.files[0]);
+      image.style.display = 'block';
+      placeholder.style.display = 'none';
+    }
+
+    document.querySelectorAll('input[type="range"]').forEach(slider => {
+      const val = (slider.value - slider.min) / (slider.max - slider.min) * 100;
+      slider.style.background = `linear-gradient(to right, #00e676 0%, #00e676 ${val}%, #1f293d ${val}%, #1f293d 100%)`;
+      slider.addEventListener('input', function() {
+        const value = (this.value - this.min) / (this.max - this.min) * 100;
+        this.style.background = `linear-gradient(to right, #00e676 0%, #00e676 ${value}%, #1f293d ${value}%, #1f293d 100%)`;
+      });
+    });
+  </script>
+</body>
+</html>
